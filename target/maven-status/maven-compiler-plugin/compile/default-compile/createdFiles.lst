@@ -1,6 +1,7 @@
 com\geo\security\LogoutSuccessHandler.class
 com\geo\security\RememberMeServices.class
 com\geo\security\CustomUserDetailsService.class
+com\geo\controller\SeurityController.class
 com\geo\repository\RoleRepository.class
 com\geo\service\impl\RoleServiceImpl.class
 com\geo\security\UserNotEnabledException.class

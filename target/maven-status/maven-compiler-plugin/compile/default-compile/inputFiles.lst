@@ -1,6 +1,7 @@
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\entities\Token.java
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\entities\User.java
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\security\RestAuthenticationSuccessHandler.java
+C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\controller\SeurityController.java
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\security\RestAuthenticationFailureHandler.java
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\security\RememberMeServices.java
 C:\project\oxygenworkspace\SpringGeolocation\src\main\java\com\geo\models\ErrorResponse.java

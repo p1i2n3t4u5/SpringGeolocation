@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -27,7 +26,6 @@ import com.geo.security.RestUnauthorizedEntryPoint;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@ComponentScan(basePackages = { "com.geo.security" })
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -67,47 +65,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-        .csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/user/**").hasAnyAuthority("admin","user")
-        .anyRequest().authenticated()
-        .antMatchers("/role/**").hasAnyAuthority("admin")
+		http.csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user").anyRequest()
+				.authenticated().antMatchers("/role/**").hasAnyAuthority("admin")
 
-        .and()
-      .exceptionHandling()
-           //.authenticationEntryPoint(restAuthenticationEntryPoint)
-           .accessDeniedHandler(restAccessDeniedHandler)
-           .and()
-       .formLogin()
-           //.loginPage("/login")  //by putting this or by applying authentication 
-                                  //entrypoint default login page would not appear
-           //.loginProcessingUrl("/authenticate")
-           .successHandler(restAuthenticationSuccessHandler)
-           .failureHandler(restAuthenticationFailureHandler)
-           .usernameParameter("username")
-           .passwordParameter("password")
-           .permitAll()
-           .and()
-       .logout()
-           .logoutUrl("/logout")
-           .logoutSuccessHandler(logoutSuccessHandler)
-           .deleteCookies("JSESSIONID")
-           .permitAll()
-           .and()
-       .rememberMe()
-           .rememberMeServices(rememberMeServices)
-           .rememberMeParameter("remember-me")
-           .rememberMeCookieName("remember-me")
-           .key(REMEMBER_ME_KEY)
-           .and()
-           ;
+				.and().exceptionHandling()
+				// .authenticationEntryPoint(restAuthenticationEntryPoint)
+				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin()
+				// .loginPage("/login") //by putting this or by applying authentication
+				// entrypoint default login page would not appear
+				// .loginProcessingUrl("/authenticate")
+				.successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
+				.usernameParameter("username").passwordParameter("password").permitAll().and().logout()
+				.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler).deleteCookies("JSESSIONID").permitAll()
+				.and().rememberMe().rememberMeServices(rememberMeServices).rememberMeParameter("remember-me")
+				.rememberMeCookieName("remember-me").key(REMEMBER_ME_KEY);
 	}
 
-	 @Bean
-	public PasswordEncoder passwordEncoder(){
-			PasswordEncoder encoder = new BCryptPasswordEncoder();
-			return encoder;
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		return encoder;
 	}
 
 	@Override
