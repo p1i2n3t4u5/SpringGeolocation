@@ -9,7 +9,6 @@ import com.geo.entities.User;
 public interface UserRepository extends JpaRepository<User, Long> {
 
 	public User findByLogin(String login);
-
 	
 }
 

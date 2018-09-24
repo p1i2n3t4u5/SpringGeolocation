@@ -1,0 +1,74 @@
+package com.geo.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.geo.entities.Address;
+import com.geo.repository.AddressRepository;
+import com.geo.repository.RoleRepository;
+import com.geo.service.AddressService;
+
+@Service("addressService")
+@Transactional
+public class AddressServiceImpl implements AddressService {
+
+	@Autowired
+	AddressRepository addressRepository;
+
+	@Autowired
+	RoleRepository roleRepository;
+
+	public List<Address> findAllAddresss() {
+		return addressRepository.findAll();
+	}
+
+	public Address findById(long id) {
+		Optional<Address> address = addressRepository.findById(id);
+		if (address.isPresent()) {
+			return address.get();
+		}
+		return null;
+	}
+
+	public Address save(Address address) {
+		return addressRepository.save(address);
+	}
+
+	public Address update(Address address) {
+		return addressRepository.save(address);
+	}
+
+	public void deleteById(long id) {
+		addressRepository.deleteById(id);
+	}
+
+	public void deleteAllAddresss() {
+		addressRepository.deleteAllInBatch();
+	}
+
+	@Override
+	public List<Address> findByCountry(String country) {
+		return addressRepository.findByCountry(country);
+	}
+
+	@Override
+	public List<Address> findByState(String state) {
+		return addressRepository.findByState(state);
+	}
+
+	@Override
+	public List<Address> findByDistrict(String district) {
+		return addressRepository.findByDistrict(district);
+	}
+
+	@Override
+	public List<Address> findAll() {
+		return addressRepository.findAll();
+	}
+
+
+}

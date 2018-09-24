@@ -1,0 +1,26 @@
+package com.geo.service;
+
+import java.util.List;
+
+import com.geo.entities.Address;
+
+public interface AddressService {
+
+	Address findById(long id);
+
+	List<Address> findByCountry(String country);
+
+	List<Address> findByState(String state);
+
+	List<Address> findByDistrict(String district);
+
+	Address save(Address user);
+
+	Address update(Address user);
+
+	void deleteById(long id);
+
+	List<Address> findAll();
+
+
+}

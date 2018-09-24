@@ -16,7 +16,7 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	RoleRepository roleRepository;
 
-	public List<Role> findAllRoles() {
+	public List<Role> findAll() {
 		return roleRepository.findAll();
 	}
 
@@ -32,23 +32,23 @@ public class RoleServiceImpl implements RoleService {
 		return roleRepository.findByRoleName(name);
 	}
 
-	public Role saveRole(Role role) {
+	public Role save(Role role) {
 		return roleRepository.save(role);
 	}
 
-	public Role updateRole(Role role) {
+	public Role update(Role role) {
 		return roleRepository.save(role);
 	}
 
-	public void deleteRoleById(long id) {
+	public void deleteById(long id) {
 		roleRepository.deleteById(id);
 	}
 
-	public boolean isRoleExist(Role user) {
+	public boolean isExist(Role user) {
 		return findByRoleName(user.getRoleName()) != null;
 	}
 
-	public void deleteAllRoles() {
+	public void deleteAll() {
 		roleRepository.deleteAllInBatch();
 	}
 

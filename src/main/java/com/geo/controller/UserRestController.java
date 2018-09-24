@@ -33,7 +33,7 @@ import com.geo.service.UserService;
 		@RequestMapping(value = "", method = RequestMethod.GET)
 		@ResponseBody
 		public ResponseEntity<List<User>> listAllUsers() {
-			List<User> users = userService.findAllUsers();
+			List<User> users = userService.findAll();
 			if (users.isEmpty()) {
 				return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);// You
 			}
@@ -63,12 +63,12 @@ import com.geo.service.UserService;
 		public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 			System.out.println("Creating User " + user.getLogin());
 
-			if (userService.isUserExist(user)) {
+			if (userService.isExist(user)) {
 				System.out.println("A User with name " + user.getLogin() + " already exist");
 				return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 			}
 
-			userService.saveUser(user);
+			userService.save(user);
 
 			HttpHeaders headers = new HttpHeaders();
 			headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(user.getId()).toUri());
@@ -96,7 +96,7 @@ import com.geo.service.UserService;
 			currentUser.setLastName(user.getLastName());
 			currentUser.setPassword(user.getPassword());
 			currentUser.setPhone(user.getPhone());
-			userService.updateUser(currentUser);
+			userService.update(currentUser);
 			return new ResponseEntity<User>(currentUser, HttpStatus.OK);
 		}
 
@@ -113,7 +113,7 @@ import com.geo.service.UserService;
 				return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 			}
 
-			userService.deleteUserById(id);
+			userService.deleteById(id);
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
 
@@ -124,7 +124,7 @@ import com.geo.service.UserService;
 		public ResponseEntity<User> deleteAllUsers() {
 			System.out.println("Deleting All Users");
 
-			userService.deleteAllUsers();
+			userService.deleteAll();
 			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
 		}
 

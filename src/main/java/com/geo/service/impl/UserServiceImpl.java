@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	RoleRepository roleRepository;
 
-	public List<User> findAllUsers() {
+	public List<User> findAll() {
 		return userRepository.findAll();
 	}
 
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByLogin(name);
 	}
 
-	public User saveUser(User user) {
+	public User save(User user) {
 		Set<Role> roles = user.getRoles();
 		Set<Role> newRoles = new HashSet<>();
 		for (Role role : roles) {
@@ -54,19 +54,19 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
-	public User updateUser(User user) {
+	public User update(User user) {
 		return userRepository.save(user);
 	}
 
-	public void deleteUserById(long id) {
+	public void deleteById(long id) {
 		userRepository.deleteById(id);
 	}
 
-	public boolean isUserExist(User user) {
+	public boolean isExist(User user) {
 		return findByLogin(user.getLogin()) != null;
 	}
 
-	public void deleteAllUsers() {
+	public void deleteAll() {
 		userRepository.deleteAllInBatch();
 	}
 

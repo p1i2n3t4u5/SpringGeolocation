@@ -10,16 +10,16 @@ public interface UserService {
 
 	User findByLogin(String name);
 
-	User saveUser(User user);
+	User save(User user);
 
-	User updateUser(User user);
+	User update(User user);
 
-	void deleteUserById(long id);
+	void deleteById(long id);
 
-	List<User> findAllUsers();
+	List<User> findAll();
 
-	void deleteAllUsers();
+	void deleteAll();
 
-	public boolean isUserExist(User user);
+	public boolean isExist(User user);
 
 }

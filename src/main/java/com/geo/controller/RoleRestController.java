@@ -32,7 +32,7 @@ public class RoleRestController {
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Role>> listAllRoles() {
-		List<Role> roles = roleService.findAllRoles();
+		List<Role> roles = roleService.findAll();
 		if (roles.isEmpty()) {
 			return new ResponseEntity<List<Role>>(HttpStatus.NO_CONTENT);// You
 		}
@@ -62,12 +62,12 @@ public class RoleRestController {
 	public ResponseEntity<Void> createRole(@RequestBody Role role, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Role " + role.getRoleName());
 
-		if (roleService.isRoleExist(role)) {
+		if (roleService.isExist(role)) {
 			System.out.println("A Role with name " + role.getRoleName() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
 
-		roleService.saveRole(role);
+		roleService.save(role);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(ucBuilder.path("/role/{id}").buildAndExpand(role.getId()).toUri());

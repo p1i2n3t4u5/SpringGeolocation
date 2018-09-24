@@ -10,16 +10,16 @@ public interface RoleService {
 
 	Role findByRoleName(String name);
 
-	Role saveRole(Role user);
+	Role save(Role user);
 
-	Role updateRole(Role user);
+	Role update(Role user);
 
-	void deleteRoleById(long id);
+	void deleteById(long id);
 
-	List<Role> findAllRoles();
+	List<Role> findAll();
+	
+	boolean isExist(Role user);
 
-	void deleteAllRoles();
-
-	public boolean isRoleExist(Role user);
+	void deleteAll();
 
 }
