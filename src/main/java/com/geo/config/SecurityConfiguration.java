@@ -1,5 +1,7 @@
 package com.geo.config;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,13 +20,17 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.geo.security.LogoutSuccessHandler;
 import com.geo.security.RestUnauthorizedEntryPoint;
 
-@Configuration
+
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -65,13 +70,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user").anyRequest()
-				.authenticated().antMatchers("/role/**").hasAnyAuthority("admin")
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user")
+				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin")
 
 				.and().exceptionHandling()
-				// .authenticationEntryPoint(restAuthenticationEntryPoint)
-				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin()
-				// .loginPage("/login") //by putting this or by applying authentication
+				 .authenticationEntryPoint(restAuthenticationEntryPoint)
+				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
+																									// or by applying
+																									// authentication
 				// entrypoint default login page would not appear
 				// .loginProcessingUrl("/authenticate")
 				.successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
@@ -94,4 +100,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				"/error/**");
 	}
 
+	
+	
 }

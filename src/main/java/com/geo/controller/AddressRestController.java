@@ -3,6 +3,9 @@ package com.geo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -67,10 +70,9 @@ public class AddressRestController {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
-
-	@RequestMapping(value = "/findByCountry", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByCountry/{country}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Address>> listAllAddressByCountry(@RequestParam("country") String country) {
+	public ResponseEntity<List<Address>> listAllAddressByCountry(@PathVariable("country") String country) {
 		List<Address> address = addressService.findByCountry(country);
 		if (address.isEmpty()) {
 			return new ResponseEntity<List<Address>>(HttpStatus.NO_CONTENT);// You
@@ -78,9 +80,9 @@ public class AddressRestController {
 		return new ResponseEntity<List<Address>>(address, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/findByDistrict", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByDistrict/{district}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Address>> listAllAddressByDistrict(@RequestParam("district") String district) {
+	public ResponseEntity<List<Address>> listAllAddressByDistrict(@PathVariable("district") String district) {
 		List<Address> address = addressService.findByDistrict(district);
 		if (address.isEmpty()) {
 			return new ResponseEntity<List<Address>>(HttpStatus.NO_CONTENT);// You
@@ -88,14 +90,34 @@ public class AddressRestController {
 		return new ResponseEntity<List<Address>>(address, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/findByState", method = RequestMethod.GET)
+	@RequestMapping(value = "/findByState/{state}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Address>> listAllAddressByState(@RequestParam("state") String state) {
+	public ResponseEntity<List<Address>> listAllAddressByState(@PathVariable("state") String state) {
 		List<Address> address = addressService.findByState(state);
 		if (address.isEmpty()) {
 			return new ResponseEntity<List<Address>>(HttpStatus.NO_CONTENT);// You
 		}
 		return new ResponseEntity<List<Address>>(address, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/paged", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Page<Address>> listAllAddressPaged(@RequestParam("page") int page,@RequestParam("size") int size) {
+		Page<Address> address = addressService.findAllPaged(PageRequest.of(page,size));
+		if (address.getSize() == 0) {
+			return new ResponseEntity<Page<Address>>(HttpStatus.NO_CONTENT);// You
+		}
+		return new ResponseEntity<Page<Address>>(address, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/slice", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,@RequestParam("size") int size) {
+		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page,size));
+		if (slice.getSize() == 0) {
+			return new ResponseEntity<Slice<Address>>(HttpStatus.NO_CONTENT);// You
+		}
+		return new ResponseEntity<Slice<Address>>(slice, HttpStatus.OK);
 	}
 
 }

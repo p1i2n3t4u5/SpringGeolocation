@@ -2,6 +2,10 @@ package com.geo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+
 import com.geo.entities.Address;
 
 public interface AddressService {
@@ -22,5 +26,8 @@ public interface AddressService {
 
 	List<Address> findAll();
 
+	Page<Address> findAllPaged(Pageable pageable);
+
+	Slice<Address> findAllSliced(Pageable pageable);
 
 }
