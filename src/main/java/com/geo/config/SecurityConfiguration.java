@@ -1,10 +1,9 @@
 package com.geo.config;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -27,10 +26,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.geo.security.LogoutSuccessHandler;
 import com.geo.security.RestUnauthorizedEntryPoint;
 
-
 @EnableWebSecurity
 @Configuration
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfiguration.class);
@@ -71,10 +68,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user")
-				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin")
+				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin").and().authorizeRequests()
+				.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().antMatchers("/**").authenticated()
 
-				.and().exceptionHandling()
-				 .authenticationEntryPoint(restAuthenticationEntryPoint)
+				.and().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
 				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
 																									// or by applying
 																									// authentication
@@ -100,6 +97,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				"/error/**");
 	}
 
-	
-	
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration config = new CorsConfiguration();
+		config.applyPermitDefaultValues();
+		config.setAllowCredentials(true);// this line is important it sends only specified domain instead of *
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", config);
+		return source;
+	}
+
 }
