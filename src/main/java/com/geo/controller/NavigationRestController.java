@@ -1,5 +1,6 @@
 package com.geo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.geo.entities.Navigation;
+import com.geo.models.Nav;
 import com.geo.service.NavigationService;
 
 @RestController
@@ -84,7 +86,7 @@ public class NavigationRestController {
 		}
 		return new ResponseEntity<List<Navigation>>(navigations, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/findAllByParent", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Navigation>> listAllByParent(@RequestParam("parentId") Long parentId) {
@@ -94,18 +96,34 @@ public class NavigationRestController {
 		}
 		return new ResponseEntity<List<Navigation>>(navigations, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/findAllByUser/{userId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Navigation>> listAllByRoles(@PathVariable("userId") Long userId) {
+	public ResponseEntity<List<Navigation>> listAllByUserId(@PathVariable("userId") Long userId) {
 		List<Navigation> navigations = navigationService.findAllByUser(userId);
 		if (navigations.isEmpty()) {
 			return new ResponseEntity<List<Navigation>>(HttpStatus.NO_CONTENT);// You
 		}
 		return new ResponseEntity<List<Navigation>>(navigations, HttpStatus.OK);
 	}
-	
-	
 
+	@RequestMapping(value = "/findAllByUser/{userId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Nav>> listAllByUserId2(@PathVariable("userId") Long userId) {
+		List<Navigation> navigations = navigationService.findAllByUser(userId);
+		if (navigations.isEmpty()) {
+			return new ResponseEntity<List<Nav>>(HttpStatus.NO_CONTENT);// You
+		}
+
+		List<Nav> navs = new ArrayList<>();
+		for (Navigation navigation : navigations) {
+			if (navigation.getParent() == null) {
+				navs.add(new Nav(navigation));
+
+			}
+		}
+
+		return new ResponseEntity<List<Nav>>(navs, HttpStatus.OK);
+	}
 
 }
