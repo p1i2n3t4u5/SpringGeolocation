@@ -107,7 +107,7 @@ public class NavigationRestController {
 		return new ResponseEntity<List<Navigation>>(navigations, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/findAllByUser/{userId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/findAllByUserTree/{userId}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Nav>> listAllByUserId2(@PathVariable("userId") Long userId) {
 		List<Navigation> navigations = navigationService.findAllByUser(userId);
@@ -115,15 +115,44 @@ public class NavigationRestController {
 			return new ResponseEntity<List<Nav>>(HttpStatus.NO_CONTENT);// You
 		}
 
-		List<Nav> navs = new ArrayList<>();
+		return new ResponseEntity<List<Nav>>(createNavigationTree(navigations), HttpStatus.OK);
+	}
+	
+	
+	
+	
+	public List<Nav> createNavigationTree(List<Navigation> navigations) {
+		List<Nav> parentNavs = new ArrayList<>();
+		List<Nav> childNavs = new ArrayList<>();
 		for (Navigation navigation : navigations) {
 			if (navigation.getParent() == null) {
-				navs.add(new Nav(navigation));
-
+				parentNavs.add(new Nav(navigation));
+			}else {
+				childNavs.add(new Nav(navigation));
 			}
 		}
-
-		return new ResponseEntity<List<Nav>>(navs, HttpStatus.OK);
+		for (Nav nav : parentNavs) {
+			nav.setChNavs(getChildTree(nav,childNavs));
+		}
+		return parentNavs;
+	}
+	
+	public List<Nav> getChildTree(Nav nav,List<Nav> childNavs) {
+		List<Nav> navs=new ArrayList<>();
+		
+		for (Nav childNavs2 : childNavs) {
+			if (childNavs2.getParentId()==nav.getId()) {
+				navs.add(childNavs2);
+			}
+		}
+		
+		if (navs.size() > 0) {
+			for (Nav nav2 : navs) {
+				nav2.setChNavs(getChildTree(nav2, childNavs));
+			}
+		}
+		
+		return navs;
 	}
 
 }

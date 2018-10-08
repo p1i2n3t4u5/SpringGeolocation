@@ -74,14 +74,11 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 		Role adminRole = roleService.findByRoleName("admin");
-		Role role = null;
-		Role role2 = null;
-		Role role3 = null;
 
 		if (adminRole == null) {
-			role = new Role();
-			role.setRoleName("admin");
-			role = roleService.save(role);
+			adminRole = new Role();
+			adminRole.setRoleName("admin");
+			adminRole = roleService.save(adminRole);
 		} else {
 			System.err.println("role already exist " + adminRole);
 		}
@@ -89,9 +86,9 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		Role userRole = roleService.findByRoleName("user");
 
 		if (userRole == null) {
-			role2 = new Role();
-			role2.setRoleName("user");
-			role2 = roleService.save(role2);
+			userRole = new Role();
+			userRole.setRoleName("user");
+			userRole = roleService.save(userRole);
 		} else {
 			System.err.println("role2 already exist " + userRole);
 		}
@@ -99,9 +96,9 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		Role superuserRole = roleService.findByRoleName("superuser");
 
 		if (superuserRole == null) {
-			role3 = new Role();
-			role3.setRoleName("superuser");
-			role3 = roleService.save(role3);
+			superuserRole = new Role();
+			superuserRole.setRoleName("superuser");
+			superuserRole = roleService.save(superuserRole);
 		} else {
 			System.err.println("role3 already exist " + superuserRole);
 		}
@@ -117,8 +114,9 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 			user.setPassword(encoder.encode("pintu12345"));
 			user.setPhone("8951560216");
 			Set<Role> roles = new HashSet<>();
-			roles.add(role);
-			roles.add(role3);
+			roles.add(superuserRole);
+			roles.add(adminRole);
+			roles.add(userRole);
 			user.setRoles(roles);
 			user = userService.save(user);
 		} else {
@@ -136,13 +134,13 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 			user2.setPassword(encoder.encode("satya12345"));
 			user2.setPhone("8888888888");
 			Set<Role> roles2 = new HashSet<>();
-			roles2.add(role2);
+			roles2.add(adminRole);
 			user2.setRoles(roles2);
 			user2 = userService.save(user2);
 		} else {
 			System.err.println("user2 already exist " + user2);
 		}
-		
+
 		User user3 = userService.findByLogin("amit");
 		if (user3 == null) {
 			user3 = new User();
@@ -154,24 +152,23 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 			user3.setPassword(encoder.encode("amit12345"));
 			user3.setPhone("9999999999");
 			Set<Role> roles3 = new HashSet<>();
-			roles3.add(role);
+			roles3.add(userRole);
 			user3.setRoles(roles3);
 			user3 = userService.save(user3);
 		} else {
 			System.err.println("user3 already exist " + user3);
 		}
 
+		//
+//		insertAddress();
 //
-//		 insertAddress();
-//		 
-//		 insertDummyMenu();
-//		 
-//		 insertSuperuserRoleNavigation();
-//		 
-//		 insertAdminRoleNavigation();
-//		 
-//		 insertUserRoleNavigation();
-		 
+//		insertDummyMenu();
+//
+//		insertSuperuserRoleNavigation();
+//
+//		insertAdminRoleNavigation();
+//
+//		insertUserRoleNavigation();
 
 		System.err.println("run() ended");
 	}
@@ -297,106 +294,127 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 	public void insertDummyMenu() {
 
 		Navigation navigation = new Navigation();
-		navigation.setIconImage("icon.png");
-		navigation.setNameToken("l1n1");
+		navigation.setIconImage("tachometer");
+		navigation.setNameToken("dashboard");
 		navigation.setParent(null);
-		navigation.setScreenLabel("LEVEL1 NODE1");
+		navigation.setScreenLabel("Dashboard");
 		navigation.setSequenceNo(1);
-		navigation.setScreenType(NodeType.NODE.getValue());
+		navigation.setScreenType(NodeType.LEAF.getValue());
 		navigation = navigationService.save(navigation);
 
 		Navigation navigation2 = new Navigation();
-		navigation2.setIconImage("icon.png");
-		navigation2.setNameToken("l1n2");
+		navigation2.setIconImage("map-marker");
+		navigation2.setNameToken("maps");
 		navigation2.setParent(null);
-		navigation2.setScreenLabel("LEVEL1 NODE2");
+		navigation2.setScreenLabel("Maps");
 		navigation2.setSequenceNo(2);
 		navigation2.setScreenType(NodeType.NODE.getValue());
 		navigation2 = navigationService.save(navigation2);
 
 		Navigation navigation3 = new Navigation();
-		navigation3.setIconImage("icon.png");
-		navigation3.setNameToken("l1n3");
+		navigation3.setIconImage("globe");
+		navigation3.setNameToken("services");
 		navigation3.setParent(null);
-		navigation3.setScreenLabel("LEVEL1 NODE3");
+		navigation3.setScreenLabel("Services");
 		navigation3.setSequenceNo(3);
-		navigation3.setScreenType(NodeType.LEAF.getValue());
+		navigation3.setScreenType(NodeType.NODE.getValue());
 		navigationService.save(navigation3);
 
 		Navigation navigation4 = new Navigation();
-		navigation4.setIconImage("icon.png");
-		navigation4.setNameToken("l1n4");
+		navigation4.setIconImage("car");
+		navigation4.setNameToken("new");
 		navigation4.setParent(null);
-		navigation4.setScreenLabel("LEVEL1 NODE4");
+		navigation4.setScreenLabel("New");
 		navigation4.setSequenceNo(4);
-		navigation4.setScreenType(NodeType.LEAF.getValue());
+		navigation4.setScreenType(NodeType.NODE.getValue());
 		navigationService.save(navigation4);
 
 		Navigation navigation5 = new Navigation();
-		navigation5.setIconImage("icon.png");
-		navigation5.setNameToken("l1n5");
+		navigation5.setIconImage("user");
+		navigation5.setNameToken("profile");
 		navigation5.setParent(null);
-		navigation5.setScreenLabel("LEVEL1 NODE5");
+		navigation5.setScreenLabel("Profile");
 		navigation5.setSequenceNo(5);
 		navigation5.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation5);
 
-		// level 2 nodes
 		Navigation navigation6 = new Navigation();
-		navigation6.setIconImage("icon.png");
-		navigation6.setNameToken("l2n1");
-		navigation6.setParent(navigation);
-		navigation6.setScreenLabel("LEVEL2 NODE1");
+		navigation6.setIconImage("users");
+		navigation6.setNameToken("users");
+		navigation6.setParent(null);
+		navigation6.setScreenLabel("Users");
 		navigation6.setSequenceNo(6);
-		navigation6.setScreenType(NodeType.NODE.getValue());
+		navigation6.setScreenType(NodeType.LEAF.getValue());
 		navigation6 = navigationService.save(navigation6);
+
+		// Map children
 
 		Navigation navigation7 = new Navigation();
 		navigation7.setIconImage("icon.png");
-		navigation7.setNameToken("l2n2");
-		navigation7.setParent(navigation);
-		navigation7.setScreenLabel("LEVEL2 NODE2");
+		navigation7.setNameToken("mapone");
+		navigation7.setParent(navigation2);
+		navigation7.setScreenLabel("Map One");
 		navigation7.setSequenceNo(7);
 		navigation7.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation7);
 
 		Navigation navigation8 = new Navigation();
 		navigation8.setIconImage("icon.png");
-		navigation8.setNameToken("l2n3");
+		navigation8.setNameToken("maptwo");
 		navigation8.setParent(navigation2);
-		navigation8.setScreenLabel("LEVEL2 NODE3");
+		navigation8.setScreenLabel("Map Two");
 		navigation8.setSequenceNo(8);
 		navigation8.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation8);
 
 		Navigation navigation9 = new Navigation();
 		navigation9.setIconImage("icon.png");
-		navigation9.setNameToken("l2n4");
+		navigation9.setNameToken("mapthree");
 		navigation9.setParent(navigation2);
 		navigation9.setScreenLabel("LEVEL2 NODE4");
 		navigation9.setSequenceNo(9);
 		navigation9.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation9);
 
-		// level 3
+		// Service children
 
 		Navigation navigation10 = new Navigation();
 		navigation10.setIconImage("icon.png");
-		navigation10.setNameToken("l3n1");
-		navigation10.setParent(navigation6);
-		navigation10.setScreenLabel("LEVEL3 NODE1");
+		navigation10.setNameToken("serviceone");
+		navigation10.setParent(navigation3);
+		navigation10.setScreenLabel("Service One");
 		navigation10.setSequenceNo(10);
 		navigation10.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation10);
 
 		Navigation navigation11 = new Navigation();
 		navigation11.setIconImage("icon.png");
-		navigation11.setNameToken("l3n2");
-		navigation11.setParent(navigation6);
-		navigation11.setScreenLabel("LEVEL3 NODE2");
+		navigation11.setNameToken("servicetwo");
+		navigation11.setParent(navigation3);
+		navigation11.setScreenLabel("Service Two");
 		navigation11.setSequenceNo(11);
 		navigation11.setScreenType(NodeType.LEAF.getValue());
 		navigationService.save(navigation11);
+
+		// New children
+
+		Navigation navigation12 = new Navigation();
+		navigation12.setIconImage("icon.png");
+		navigation12.setNameToken("newone");
+		navigation12.setParent(navigation4);
+		navigation12.setScreenLabel("New One");
+		navigation12.setSequenceNo(10);
+		navigation12.setScreenType(NodeType.LEAF.getValue());
+		navigationService.save(navigation12);
+
+		Navigation navigation13 = new Navigation();
+		navigation13.setIconImage("icon.png");
+		navigation13.setNameToken("newtwo");
+		navigation13.setParent(navigation4);
+		navigation13.setScreenLabel("New Two");
+		navigation13.setSequenceNo(11);
+		navigation13.setScreenType(NodeType.LEAF.getValue());
+		navigationService.save(navigation13);
 
 	}
 
@@ -408,17 +426,19 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 
 		// find all navigation
 
-		Navigation navigation = navigationService.findByNameToken("l1n1");
-		Navigation navigation2 = navigationService.findByNameToken("l1n2");
-		Navigation navigation3 = navigationService.findByNameToken("l1n3");
-		Navigation navigation4 = navigationService.findByNameToken("l1n4");
-		Navigation navigation5 = navigationService.findByNameToken("l1n5");
-		Navigation navigation6 = navigationService.findByNameToken("l2n1");
-		Navigation navigation7 = navigationService.findByNameToken("l2n2");
-		Navigation navigation8 = navigationService.findByNameToken("l2n3");
-		Navigation navigation9 = navigationService.findByNameToken("l2n4");
-		Navigation navigation10 = navigationService.findByNameToken("l3n1");
-		Navigation navigation11 = navigationService.findByNameToken("l3n2");
+		Navigation navigation = navigationService.findByNameToken("dashboard");
+		Navigation navigation2 = navigationService.findByNameToken("maps");
+		Navigation navigation3 = navigationService.findByNameToken("services");
+		Navigation navigation4 = navigationService.findByNameToken("new");
+		Navigation navigation5 = navigationService.findByNameToken("profile");
+		Navigation navigation6 = navigationService.findByNameToken("users");
+		Navigation navigation7 = navigationService.findByNameToken("mapone");
+		Navigation navigation8 = navigationService.findByNameToken("maptwo");
+		Navigation navigation9 = navigationService.findByNameToken("mapthree");
+		Navigation navigation10 = navigationService.findByNameToken("serviceone");
+		Navigation navigation11 = navigationService.findByNameToken("servicetwo");
+		Navigation navigation12 = navigationService.findByNameToken("newone");
+		Navigation navigation13 = navigationService.findByNameToken("newtwo");
 
 		RoleNavigation roleNavigation = new RoleNavigation();
 		roleNavigation.setRole(superuser);
@@ -475,28 +495,37 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		roleNavigation11.setNavigation(navigation11);
 		roleNavigationService.save(roleNavigation11);
 
-	}
-	
-	
-	public void insertAdminRoleNavigation() {
+		RoleNavigation roleNavigation12 = new RoleNavigation();
+		roleNavigation12.setRole(superuser);
+		roleNavigation12.setNavigation(navigation12);
+		roleNavigationService.save(roleNavigation12);
 
-		// for role admin
+		RoleNavigation roleNavigation13 = new RoleNavigation();
+		roleNavigation13.setRole(superuser);
+		roleNavigation13.setNavigation(navigation13);
+		roleNavigationService.save(roleNavigation13);
+
+	}
+
+	public void insertAdminRoleNavigation() {
 
 		Role admin = roleService.findByRoleName("admin");
 
 		// find all navigation
 
-		Navigation navigation = navigationService.findByNameToken("l1n1");
-		Navigation navigation2 = navigationService.findByNameToken("l1n2");
-		Navigation navigation3 = navigationService.findByNameToken("l1n3");
-		Navigation navigation4 = navigationService.findByNameToken("l1n4");
-		Navigation navigation5 = navigationService.findByNameToken("l1n5");
-		Navigation navigation6 = navigationService.findByNameToken("l2n1");
-		Navigation navigation7 = navigationService.findByNameToken("l2n2");
-		Navigation navigation8 = navigationService.findByNameToken("l2n3");
-		Navigation navigation9 = navigationService.findByNameToken("l2n4");
-		Navigation navigation10 = navigationService.findByNameToken("l3n1");
-		Navigation navigation11 = navigationService.findByNameToken("l3n2");
+		Navigation navigation = navigationService.findByNameToken("dashboard");
+		Navigation navigation2 = navigationService.findByNameToken("maps");
+		Navigation navigation3 = navigationService.findByNameToken("services");
+		// Navigation navigation4 = navigationService.findByNameToken("new");
+		Navigation navigation5 = navigationService.findByNameToken("profile");
+		Navigation navigation6 = navigationService.findByNameToken("users");
+		Navigation navigation7 = navigationService.findByNameToken("mapone");
+		Navigation navigation8 = navigationService.findByNameToken("maptwo");
+		// Navigation navigation9 = navigationService.findByNameToken("mapthree");
+		Navigation navigation10 = navigationService.findByNameToken("serviceone");
+		Navigation navigation11 = navigationService.findByNameToken("servicetwo");
+		// Navigation navigation12 = navigationService.findByNameToken("newone");
+		// Navigation navigation13 = navigationService.findByNameToken("newtwo");
 
 		RoleNavigation roleNavigation = new RoleNavigation();
 		roleNavigation.setRole(admin);
@@ -513,10 +542,10 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		roleNavigation3.setNavigation(navigation3);
 		roleNavigationService.save(roleNavigation3);
 
-		RoleNavigation roleNavigation4 = new RoleNavigation();
-		roleNavigation4.setRole(admin);
-		roleNavigation4.setNavigation(navigation4);
-		roleNavigationService.save(roleNavigation4);
+		// RoleNavigation roleNavigation4 = new RoleNavigation();
+		// roleNavigation4.setRole(admin);
+		// roleNavigation4.setNavigation(navigation4);
+		// roleNavigationService.save(roleNavigation4);
 
 		RoleNavigation roleNavigation5 = new RoleNavigation();
 		roleNavigation5.setRole(admin);
@@ -538,10 +567,10 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		roleNavigation8.setNavigation(navigation8);
 		roleNavigationService.save(roleNavigation8);
 
-		RoleNavigation roleNavigation9 = new RoleNavigation();
-		roleNavigation9.setRole(admin);
-		roleNavigation9.setNavigation(navigation9);
-		roleNavigationService.save(roleNavigation9);
+		// RoleNavigation roleNavigation9 = new RoleNavigation();
+		// roleNavigation9.setRole(admin);
+		// roleNavigation9.setNavigation(navigation9);
+		// roleNavigationService.save(roleNavigation9);
 
 		RoleNavigation roleNavigation10 = new RoleNavigation();
 		roleNavigation10.setRole(admin);
@@ -553,27 +582,38 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		roleNavigation11.setNavigation(navigation11);
 		roleNavigationService.save(roleNavigation11);
 
-	}
-	
-	
-	public void insertUserRoleNavigation() {
+		// RoleNavigation roleNavigation12 = new RoleNavigation();
+		// roleNavigation12.setRole(admin);
+		// roleNavigation12.setNavigation(navigation12);
+		// roleNavigationService.save(roleNavigation12);
+		//
+		//
+		// RoleNavigation roleNavigation13 = new RoleNavigation();
+		// roleNavigation13.setRole(admin);
+		// roleNavigation13.setNavigation(navigation13);
+		// roleNavigationService.save(roleNavigation13);
 
+	}
+
+	public void insertUserRoleNavigation() {
 
 		Role user = roleService.findByRoleName("user");
 
 		// find all navigation
 
-		Navigation navigation = navigationService.findByNameToken("l1n1");
-		Navigation navigation2 = navigationService.findByNameToken("l1n2");
-		Navigation navigation3 = navigationService.findByNameToken("l1n3");
-		Navigation navigation4 = navigationService.findByNameToken("l1n4");
-		Navigation navigation5 = navigationService.findByNameToken("l1n5");
-		Navigation navigation6 = navigationService.findByNameToken("l2n1");
-		Navigation navigation7 = navigationService.findByNameToken("l2n2");
-		Navigation navigation8 = navigationService.findByNameToken("l2n3");
-		Navigation navigation9 = navigationService.findByNameToken("l2n4");
-		Navigation navigation10 = navigationService.findByNameToken("l3n1");
-		Navigation navigation11 = navigationService.findByNameToken("l3n2");
+		Navigation navigation = navigationService.findByNameToken("dashboard");
+		Navigation navigation2 = navigationService.findByNameToken("maps");
+		Navigation navigation3 = navigationService.findByNameToken("services");
+		Navigation navigation4 = navigationService.findByNameToken("new");
+		Navigation navigation5 = navigationService.findByNameToken("profile");
+		// Navigation navigation6 = navigationService.findByNameToken("users");
+		Navigation navigation7 = navigationService.findByNameToken("mapone");
+		Navigation navigation8 = navigationService.findByNameToken("maptwo");
+		Navigation navigation9 = navigationService.findByNameToken("mapthree");
+		// Navigation navigation10 = navigationService.findByNameToken("serviceone");
+		// Navigation navigation11 = navigationService.findByNameToken("servicetwo");
+		// Navigation navigation12 = navigationService.findByNameToken("newone");
+		// Navigation navigation13 = navigationService.findByNameToken("newtwo");
 
 		RoleNavigation roleNavigation = new RoleNavigation();
 		roleNavigation.setRole(user);
@@ -585,53 +625,62 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		roleNavigation2.setNavigation(navigation2);
 		roleNavigationService.save(roleNavigation2);
 
-//		RoleNavigation roleNavigation3 = new RoleNavigation();
-//		roleNavigation3.setRole(user);
-//		roleNavigation3.setNavigation(navigation3);
-//		roleNavigationService.save(roleNavigation3);
-//
-//		RoleNavigation roleNavigation4 = new RoleNavigation();
-//		roleNavigation4.setRole(user);
-//		roleNavigation4.setNavigation(navigation4);
-//		roleNavigationService.save(roleNavigation4);
+		RoleNavigation roleNavigation3 = new RoleNavigation();
+		roleNavigation3.setRole(user);
+		roleNavigation3.setNavigation(navigation3);
+		roleNavigationService.save(roleNavigation3);
+
+		RoleNavigation roleNavigation4 = new RoleNavigation();
+		roleNavigation4.setRole(user);
+		roleNavigation4.setNavigation(navigation4);
+		roleNavigationService.save(roleNavigation4);
 
 		RoleNavigation roleNavigation5 = new RoleNavigation();
 		roleNavigation5.setRole(user);
 		roleNavigation5.setNavigation(navigation5);
 		roleNavigationService.save(roleNavigation5);
 
-		RoleNavigation roleNavigation6 = new RoleNavigation();
-		roleNavigation6.setRole(user);
-		roleNavigation6.setNavigation(navigation6);
-		roleNavigationService.save(roleNavigation6);
+		// RoleNavigation roleNavigation6 = new RoleNavigation();
+		// roleNavigation6.setRole(user);
+		// roleNavigation6.setNavigation(navigation6);
+		// roleNavigationService.save(roleNavigation6);
 
-//		RoleNavigation roleNavigation7 = new RoleNavigation();
-//		roleNavigation7.setRole(user);
-//		roleNavigation7.setNavigation(navigation7);
-//		roleNavigationService.save(roleNavigation7);
+		RoleNavigation roleNavigation7 = new RoleNavigation();
+		roleNavigation7.setRole(user);
+		roleNavigation7.setNavigation(navigation7);
+		roleNavigationService.save(roleNavigation7);
 
 		RoleNavigation roleNavigation8 = new RoleNavigation();
 		roleNavigation8.setRole(user);
 		roleNavigation8.setNavigation(navigation8);
 		roleNavigationService.save(roleNavigation8);
-//
-//		RoleNavigation roleNavigation9 = new RoleNavigation();
-//		roleNavigation9.setRole(user);
-//		roleNavigation9.setNavigation(navigation9);
-//		roleNavigationService.save(roleNavigation9);
 
-		RoleNavigation roleNavigation10 = new RoleNavigation();
-		roleNavigation10.setRole(user);
-		roleNavigation10.setNavigation(navigation10);
-		roleNavigationService.save(roleNavigation10);
+		RoleNavigation roleNavigation9 = new RoleNavigation();
+		roleNavigation9.setRole(user);
+		roleNavigation9.setNavigation(navigation9);
+		roleNavigationService.save(roleNavigation9);
 
-		RoleNavigation roleNavigation11 = new RoleNavigation();
-		roleNavigation11.setRole(user);
-		roleNavigation11.setNavigation(navigation11);
-		roleNavigationService.save(roleNavigation11);
+		// RoleNavigation roleNavigation10 = new RoleNavigation();
+		// roleNavigation10.setRole(user);
+		// roleNavigation10.setNavigation(navigation10);
+		// roleNavigationService.save(roleNavigation10);
+		//
+		// RoleNavigation roleNavigation11 = new RoleNavigation();
+		// roleNavigation11.setRole(user);
+		// roleNavigation11.setNavigation(navigation11);
+		// roleNavigationService.save(roleNavigation11);
+
+		// RoleNavigation roleNavigation12 = new RoleNavigation();
+		// roleNavigation12.setRole(user);
+		// roleNavigation12.setNavigation(navigation12);
+		// roleNavigationService.save(roleNavigation12);
+		//
+		//
+		// RoleNavigation roleNavigation13 = new RoleNavigation();
+		// roleNavigation13.setRole(user);
+		// roleNavigation13.setNavigation(navigation13);
+		// roleNavigationService.save(roleNavigation13);
 
 	}
-
-
 
 }

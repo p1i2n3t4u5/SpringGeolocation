@@ -27,6 +27,8 @@ public class Nav {
 		}
 		this.nameToken=navigation.getNameToken();
 		this.screenType=navigation.getScreenType();
+		this.sequenceNo=navigation.getSequenceNo();
+		this.iconImage=navigation.getIconImage();
 	}
 
 	public long getId() {
