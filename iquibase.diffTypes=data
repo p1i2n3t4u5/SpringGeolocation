@@ -1,0 +1,33 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.geolocation:SpringGeolocation >------------------
+[INFO] Building SpringGeolocation 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- liquibase-maven-plugin:3.6.2:generateChangeLog (default-cli) @ SpringGeolocation ---
+[INFO] ------------------------------------------------------------------------
+[INFO] Parsing Liquibase Properties File
+[INFO]   File: src/main/resources/liquibase.properties
+[INFO] ------------------------------------------------------------------------
+[INFO] Starting Liquibase at Mon, 15 Oct 2018 11:08:30 IST (version 3.6.2 built at 2018-07-03 11:28:09)
+Mon Oct 15 11:08:31 IST 2018 WARN: Establishing SSL connection without server's identity verification is not recommended. According to MySQL 5.5.45+, 5.6.26+ and 5.7.6+ requirements SSL connection must be established by default if explicit option isn't set. For compliance with existing applications not using SSL the verifyServerCertificate property is set to 'false'. You need either to explicitly disable SSL by setting useSSL=false, or set useSSL=true and provide truststore for server certificate verification.
+[INFO] Executing on Database: jdbc:mysql://localhost:3306/googlemap
+[INFO] Generating Change Log from database root@localhost @ jdbc:mysql://localhost:3306/googlemap (Default Schema: googlemap)
+[INFO] CREATE TABLE TMP_PENXKHHNKPIIYNYG (
+  id INT PRIMARY KEY,
+  self_ref INT NOT NULL,
+  CONSTRAINT c_self_ref FOREIGN KEY(self_ref) REFERENCES TMP_PENXKHHNKPIIYNYG(id)
+)
+[INFO] DROP TABLE TMP_PENXKHHNKPIIYNYG
+[INFO] select const.CONSTRAINT_NAME, COLUMN_NAME from information_schema.table_constraints const join information_schema.key_column_usage col on const.constraint_schema=col.constraint_schema and const.table_name=col.table_name and const.constraint_name=col.constraint_name where const.constraint_schema='googlemap' and const.table_name='navigation' and const.constraint_name='name_token'order by ordinal_position
+[INFO] select const.CONSTRAINT_NAME, COLUMN_NAME from information_schema.table_constraints const join information_schema.key_column_usage col on const.constraint_schema=col.constraint_schema and const.table_name=col.table_name and const.constraint_name=col.constraint_name where const.constraint_schema='googlemap' and const.table_name='user' and const.constraint_name='login'order by ordinal_position
+[INFO] src\main\resources\db\changelog\db.changelog-1.1.0.xml does not exist, creating
+[INFO] Output written to Change Log file, src/main/resources/db/changelog/db.changelog-1.1.0.xml
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 5.575 s
+[INFO] Finished at: 2018-10-15T11:08:34+05:30
+[INFO] ------------------------------------------------------------------------

@@ -68,8 +68,10 @@
 		</dependency>
 		<!-- <dependency> <groupId>org.apache.camel</groupId> <artifactId>camel-spring-boot-starter</artifactId> 
 			<version>2.22.1</version> </dependency> -->
-		<!-- <dependency> <groupId>org.liquibase</groupId> <artifactId>liquibase-core</artifactId> 
-			</dependency> -->
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-core</artifactId>
@@ -131,12 +133,6 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -161,9 +157,15 @@
 			<artifactId>geocoder-java</artifactId>
 			<version>0.16</version>
 		</dependency>
-
-
-
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-maven-plugin</artifactId>
+			<version>3.6.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -172,6 +174,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.liquibase</groupId>
+				<artifactId>liquibase-maven-plugin</artifactId>
+				<version>3.6.2</version>
+				<configuration>
+					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
+					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.xml</changeLogFile>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

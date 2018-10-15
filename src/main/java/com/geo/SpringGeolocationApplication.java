@@ -71,95 +71,95 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		logger.debug("hello");
 		System.err.println("run() started");
 
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-
-		Role adminRole = roleService.findByRoleName("admin");
-
-		if (adminRole == null) {
-			adminRole = new Role();
-			adminRole.setRoleName("admin");
-			adminRole = roleService.save(adminRole);
-		} else {
-			System.err.println("role already exist " + adminRole);
-		}
-
-		Role userRole = roleService.findByRoleName("user");
-
-		if (userRole == null) {
-			userRole = new Role();
-			userRole.setRoleName("user");
-			userRole = roleService.save(userRole);
-		} else {
-			System.err.println("role2 already exist " + userRole);
-		}
-
-		Role superuserRole = roleService.findByRoleName("superuser");
-
-		if (superuserRole == null) {
-			superuserRole = new Role();
-			superuserRole.setRoleName("superuser");
-			superuserRole = roleService.save(superuserRole);
-		} else {
-			System.err.println("role3 already exist " + superuserRole);
-		}
-
-		User user = userService.findByLogin("pintu");
-		if (user == null) {
-			user = new User();
-			user.setAcive(true);
-			user.setEmail("niranjanpanigrahi2009@gmail.com");
-			user.setFirstName("Niranjan");
-			user.setLastName("Panigrahi");
-			user.setLogin("pintu");
-			user.setPassword(encoder.encode("pintu12345"));
-			user.setPhone("8951560216");
-			Set<Role> roles = new HashSet<>();
-			roles.add(superuserRole);
-			roles.add(adminRole);
-			roles.add(userRole);
-			user.setRoles(roles);
-			user = userService.save(user);
-		} else {
-			System.err.println("user1 already exist " + user);
-		}
-
-		User user2 = userService.findByLogin("satya");
-		if (user2 == null) {
-			user2 = new User();
-			user2.setAcive(true);
-			user2.setEmail("satyamishra@gmail.com");
-			user2.setFirstName("Satya");
-			user2.setLastName("Mishra");
-			user2.setLogin("satya");
-			user2.setPassword(encoder.encode("satya12345"));
-			user2.setPhone("8888888888");
-			Set<Role> roles2 = new HashSet<>();
-			roles2.add(adminRole);
-			user2.setRoles(roles2);
-			user2 = userService.save(user2);
-		} else {
-			System.err.println("user2 already exist " + user2);
-		}
-
-		User user3 = userService.findByLogin("amit");
-		if (user3 == null) {
-			user3 = new User();
-			user3.setAcive(true);
-			user3.setEmail("amit@gmail.com");
-			user3.setFirstName("Amit");
-			user3.setLastName("Saha");
-			user3.setLogin("amit");
-			user3.setPassword(encoder.encode("amit12345"));
-			user3.setPhone("9999999999");
-			Set<Role> roles3 = new HashSet<>();
-			roles3.add(userRole);
-			user3.setRoles(roles3);
-			user3 = userService.save(user3);
-		} else {
-			System.err.println("user3 already exist " + user3);
-		}
-
-		//
+//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//
+//		Role adminRole = roleService.findByRoleName("admin");
+//
+//		if (adminRole == null) {
+//			adminRole = new Role();
+//			adminRole.setRoleName("admin");
+//			adminRole = roleService.save(adminRole);
+//		} else {
+//			System.err.println("role already exist " + adminRole);
+//		}
+//
+//		Role userRole = roleService.findByRoleName("user");
+//
+//		if (userRole == null) {
+//			userRole = new Role();
+//			userRole.setRoleName("user");
+//			userRole = roleService.save(userRole);
+//		} else {
+//			System.err.println("role2 already exist " + userRole);
+//		}
+//
+//		Role superuserRole = roleService.findByRoleName("superuser");
+//
+//		if (superuserRole == null) {
+//			superuserRole = new Role();
+//			superuserRole.setRoleName("superuser");
+//			superuserRole = roleService.save(superuserRole);
+//		} else {
+//			System.err.println("role3 already exist " + superuserRole);
+//		}
+//
+//		User user = userService.findByLogin("pintu");
+//		if (user == null) {
+//			user = new User();
+//			user.setAcive(true);
+//			user.setEmail("niranjanpanigrahi2009@gmail.com");
+//			user.setFirstName("Niranjan");
+//			user.setLastName("Panigrahi");
+//			user.setLogin("pintu");
+//			user.setPassword(encoder.encode("pintu12345"));
+//			user.setPhone("8951560216");
+//			Set<Role> roles = new HashSet<>();
+//			roles.add(superuserRole);
+//			roles.add(adminRole);
+//			roles.add(userRole);
+//			user.setRoles(roles);
+//			user = userService.save(user);
+//		} else {
+//			System.err.println("user1 already exist " + user);
+//		}
+//
+//		User user2 = userService.findByLogin("satya");
+//		if (user2 == null) {
+//			user2 = new User();
+//			user2.setAcive(true);
+//			user2.setEmail("satyamishra@gmail.com");
+//			user2.setFirstName("Satya");
+//			user2.setLastName("Mishra");
+//			user2.setLogin("satya");
+//			user2.setPassword(encoder.encode("satya12345"));
+//			user2.setPhone("8888888888");
+//			Set<Role> roles2 = new HashSet<>();
+//			roles2.add(adminRole);
+//			user2.setRoles(roles2);
+//			user2 = userService.save(user2);
+//		} else {
+//			System.err.println("user2 already exist " + user2);
+//		}
+//
+//		User user3 = userService.findByLogin("amit");
+//		if (user3 == null) {
+//			user3 = new User();
+//			user3.setAcive(true);
+//			user3.setEmail("amit@gmail.com");
+//			user3.setFirstName("Amit");
+//			user3.setLastName("Saha");
+//			user3.setLogin("amit");
+//			user3.setPassword(encoder.encode("amit12345"));
+//			user3.setPhone("9999999999");
+//			Set<Role> roles3 = new HashSet<>();
+//			roles3.add(userRole);
+//			user3.setRoles(roles3);
+//			user3 = userService.save(user3);
+//		} else {
+//			System.err.println("user3 already exist " + user3);
+//		}
+//
+//		//
 //		insertAddress();
 //
 //		insertDummyMenu();
