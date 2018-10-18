@@ -6890,4 +6890,21 @@
             <column name="role_id" valueNumeric="3"/>
         </insert>
     </changeSet>
+    
+    
+    <changeSet author="nirpanig (generated)" id="1539581954677-7">
+            <insert tableName="address">
+            <column name="id" valueNumeric="501"/>
+            <column name="address_line_one" value="Affiliated With Travelodge new"/>
+            <column name="address_line_two" value="407-413-4842,407-557-8857,chauncey_motley@aol.com"/>
+            <column name="country" value="Orange"/>
+            <column name="district" value="Orlando"/>
+            <column name="gps_location_latitude" value="1.3329427019341316"/>
+            <column name="gps_location_longitude" value="0.6401777973634561"/>
+            <column name="is_active" valueBoolean="true"/>
+            <column name="pincode" value="32804"/>
+            <column name="state" value="FL"/>
+            <column name="street" value="63 E Aurora Dr sss"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

@@ -70,6 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user")
 				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin").and().authorizeRequests()
 				.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().antMatchers("/**").authenticated()
+				.antMatchers("/h2-console/**").permitAll()
 
 				.and().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
 				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
@@ -94,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/resources/**", "/index.html", "/login.html", "/partials/**", "/template/**", "/",
-				"/error/**");
+				"/error/**", "/h2-console", "*/h2-console/*");
 	}
 
 	@Bean

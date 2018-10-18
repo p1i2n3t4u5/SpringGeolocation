@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.util.HashSet;
-import java.util.Set;
+
+import javax.sql.DataSource;
 
 import org.apache.commons.io.IOUtils;
 //import org.apache.commons.io.IOUtils;
@@ -21,14 +21,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.ResourceUtils;
 
 import com.geo.entities.Address;
 import com.geo.entities.Navigation;
 import com.geo.entities.Role;
 import com.geo.entities.RoleNavigation;
-import com.geo.entities.User;
 import com.geo.models.NodeType;
 import com.geo.models.google.Geocode;
 import com.geo.service.AddressService;
@@ -58,6 +56,10 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 
 	@Autowired
 	RoleNavigationService roleNavigationService;
+	
+	
+	@Autowired
+	DataSource dataSource;
 
 	private static final String URL = "https://maps.googleapis.com/maps/api/geocode/json";
 
@@ -70,6 +72,7 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 	public void run(String... arg0) throws Exception {
 		logger.debug("hello");
 		System.err.println("run() started");
+		System.err.println("Datasource:"+dataSource);
 
 //		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
