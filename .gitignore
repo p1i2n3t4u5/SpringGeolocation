@@ -24,3 +24,5 @@ hs_err_pid*
 
 #to ignore target folder
 /target
+target/
+target
