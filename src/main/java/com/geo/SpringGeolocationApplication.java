@@ -23,6 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.util.ResourceUtils;
 
+import com.geo.config.profile.EnvBasedConfig;
 import com.geo.entities.Address;
 import com.geo.entities.Navigation;
 import com.geo.entities.Role;
@@ -60,6 +61,9 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 	
 	@Autowired
 	DataSource dataSource;
+	
+	@Autowired
+	EnvBasedConfig envBasedConfig;
 
 	private static final String URL = "https://maps.googleapis.com/maps/api/geocode/json";
 
@@ -73,6 +77,7 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		logger.debug("hello");
 		System.err.println("run() started");
 		System.err.println("Datasource:"+dataSource);
+		envBasedConfig.setUp();
 
 //		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
