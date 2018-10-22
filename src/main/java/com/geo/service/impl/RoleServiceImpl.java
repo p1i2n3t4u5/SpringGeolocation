@@ -10,6 +10,8 @@ import com.geo.entities.Role;
 import com.geo.repository.RoleRepository;
 import com.geo.service.RoleService;
 
+import exception.DuplicateEntryException;
+
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {
 
@@ -33,6 +35,11 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	public Role save(Role role) {
+
+		Role role2 = roleRepository.findByRoleName(role.getRoleName());
+		if (role2 != null) {
+			throw new DuplicateEntryException("role with role name =" + role.getRoleName() + " already exist");
+		}
 		return roleRepository.save(role);
 	}
 

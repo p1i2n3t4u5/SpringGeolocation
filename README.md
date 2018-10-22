@@ -22,6 +22,12 @@ spring.datasource.data=classpath:data.sql  # Data (DML) script resource referenc
 to generate change set with existing data from database 
 C:\project\oxygenworkspace\SpringGeolocation>mvn liquibase:generateChangeLog -Dliquibase.diffTypes="data"
 
+to see dependency tree in case duplicate dependency present
+mvn dependency:tree
+
+to start application with embedded tomcat
+mvn spring-boot:run
+
 
 
 
