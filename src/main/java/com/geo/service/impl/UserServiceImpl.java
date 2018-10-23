@@ -44,12 +44,15 @@ public class UserServiceImpl implements UserService {
 	public User save(User user) {
 		Set<Role> roles = user.getRoles();
 		Set<Role> newRoles = new HashSet<>();
-		for (Role role : roles) {
-			Optional<Role> roleOption=roleRepository.findById(role.getId());
-			if (roleOption.isPresent()) {
-				newRoles.add(roleOption.get());
+		if (roles != null) {
+			for (Role role : roles) {
+				Optional<Role> roleOption=roleRepository.findById(role.getId());
+				if (roleOption.isPresent()) {
+					newRoles.add(roleOption.get());
+				}
 			}
 		}
+		
 		user.setRoles(newRoles);
 		return userRepository.save(user);
 	}
