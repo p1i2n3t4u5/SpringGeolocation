@@ -44,7 +44,9 @@ public class UserServiceImpl implements UserService {
 	public User save(User user) {
 		Set<Role> roles = user.getRoles();
 		Set<Role> newRoles = new HashSet<>();
-		if(roles!=null) {
+
+		if (roles != null) {
+
 			for (Role role : roles) {
 				Optional<Role> roleOption=roleRepository.findById(role.getId());
 				if (roleOption.isPresent()) {
