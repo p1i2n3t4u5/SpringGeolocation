@@ -93,7 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+//		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/resources/**", "/index.html", "/login.html", "/partials/**", "/template/**", "/",
 				"/error/**", "/h2-console", "*/h2-console/*");
 	}
@@ -102,10 +102,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.applyPermitDefaultValues();
+		config.addAllowedMethod(HttpMethod.DELETE);
+		config.addAllowedMethod(HttpMethod.OPTIONS);
+		config.addAllowedMethod(HttpMethod.PATCH);
+		config.addAllowedMethod(HttpMethod.PUT);
+		config.addAllowedMethod(HttpMethod.TRACE);
 		config.setAllowCredentials(true);// this line is important it sends only specified domain instead of *
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;
 	}
+
 
 }
