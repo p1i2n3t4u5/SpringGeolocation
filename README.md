@@ -25,8 +25,38 @@ C:\project\oxygenworkspace\SpringGeolocation>mvn liquibase:generateChangeLog -Dl
 to see dependency tree in case duplicate dependency present
 mvn dependency:tree
 
-to start application with embedded tomcat
+to start application with embedded tomcat from codebase
+-------------------------------------------------------
 mvn spring-boot:run
+
+start application from war file
+--------------------------------
+C:\project\oxygenworkspace\SpringGeolocation\target>java -jar SpringGeolocation.war
+
+skip test while building 
+-----------------------------
+C:\project\oxygenworkspace\SpringGeolocation>mvn clean install -DskipTests=true
+
+
+
+request mail format
+-------------------------
+{
+"email":"niranjanpanigrahi2009@gmail.com",
+"subject":"Things I wanna say to my Future self",
+"body":"Dear Future me, <br><br> <b>Think Big And Don’t Listen To People Who Tell You It Can’t Be Done. Life’s Too Short To Think Small.</b> <br><br> Cheers, <br>Rajeev!",
+"dateTime":"2018-10-25T12:04:00",
+"timeZone":"Asia/Kolkata"
+	
+}
+
+
+
+to enable gmail smtp access enable from below link
+---------------------------------------------------
+
+https://myaccount.google.com/u/1/lesssecureapps?pageId=none
+
 
 
 

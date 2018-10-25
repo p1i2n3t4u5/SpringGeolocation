@@ -71,6 +71,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin").and().authorizeRequests()
 				.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().antMatchers("/**").authenticated()
 				.antMatchers("/h2-console/**").permitAll()
+//				.antMatchers("*/address/*").permitAll()
 
 				.and().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
 				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
@@ -95,7 +96,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 //		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/resources/**", "/index.html", "/login.html", "/partials/**", "/template/**", "/",
-				"/error/**", "/h2-console", "*/h2-console/*");
+				"/error/**", "/h2-console", "*/h2-console/*","/address/**");
 	}
 
 	@Bean
