@@ -15,8 +15,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.geo.config.profile.EnvBasedConfig;
+import com.geo.entities.User;
 import com.geo.service.AddressService;
 import com.geo.service.NavigationService;
 import com.geo.service.RoleNavigationService;
@@ -69,8 +71,7 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		System.err.println("Datasource:"+dataSource);
 		envBasedConfig.setUp();
 		
-
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	//	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //
 //		Role adminRole = roleService.findByRoleName("admin");
 //
@@ -102,25 +103,30 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 //			System.err.println("role3 already exist " + superuserRole);
 //		}
 //
-//		User user = userService.findByLogin("pintu");
-//		if (user == null) {
-//			user = new User();
-//			user.setAcive(true);
-//			user.setEmail("niranjanpanigrahi2009@gmail.com");
-//			user.setFirstName("Niranjan");
-//			user.setLastName("Panigrahi");
-//			user.setLogin("pintu");
-//			user.setPassword(encoder.encode("pintu12345"));
-//			user.setPhone("8951560216");
-//			Set<Role> roles = new HashSet<>();
-//			roles.add(superuserRole);
-//			roles.add(adminRole);
-//			roles.add(userRole);
-//			user.setRoles(roles);
-//			user = userService.save(user);
-//		} else {
-//			System.err.println("user1 already exist " + user);
-//		}
+		/*User user = userService.findByLogin("pintu");
+		if (user == null) {
+		user = new User();
+		user.setAcive(true);
+			user.setEmail("niranjanpanigrahi2009@gmail.com");
+		user.setFirstName("Niranjan");
+			user.setLastName("Panigrahi");
+			user.setLogin("pintu");
+		user.setPassword(encoder.encode("pintu12345"));
+			user.setPhone("8951560216");
+			Set<Role> roles = new HashSet<>();
+			roles.add(superuserRole);
+			roles.add(adminRole);
+			roles.add(userRole);
+		user.setRoles(roles);
+		user = userService.save(user);
+		} else {
+		System.err.println("user1 already exist " + user);
+		}*/
+		
+		/*User user = userService.findById(1);
+		user.setPassword(encoder.encode("pintu12345"));
+		user = userService.update(user);
+		*/
 //
 //		User user2 = userService.findByLogin("satya");
 //		if (user2 == null) {
