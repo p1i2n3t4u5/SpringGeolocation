@@ -22,6 +22,7 @@ import com.geo.service.UserService;
 @RestController
 @RequestMapping(value = "/user")
 public class UserRestController {
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 //	@RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
 //	public ResponseEntity<String> handle() {
@@ -72,7 +73,7 @@ public class UserRestController {
 			System.out.println("A User with name " + user.getLogin() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
-
+		user.setPassword(encoder.encode(user.getPassword()));
 		userService.save(user);
 
 		HttpHeaders headers = new HttpHeaders();
@@ -86,7 +87,7 @@ public class UserRestController {
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
 	@ResponseBody
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
 		System.out.println("Updating User " + id);
 
 		User currentUser = userService.findById(id);
