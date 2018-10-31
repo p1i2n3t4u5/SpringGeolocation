@@ -7,6 +7,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import com.geo.service.UserService;
 @RestController
 @RequestMapping(value = "/user")
 public class UserRestController {
+	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
 //	@RequestMapping(value = "/**", method = RequestMethod.OPTIONS)
 //	public ResponseEntity<String> handle() {
@@ -71,7 +73,7 @@ public class UserRestController {
 			System.out.println("A User with name " + user.getLogin() + " already exist");
 			return new ResponseEntity<Void>(HttpStatus.CONFLICT);
 		}
-
+		user.setPassword(encoder.encode(user.getPassword()));
 		userService.save(user);
 
 		HttpHeaders headers = new HttpHeaders();
@@ -98,7 +100,7 @@ public class UserRestController {
 		currentUser.setEmail(user.getEmail());
 		currentUser.setFirstName(user.getFirstName());
 		currentUser.setLastName(user.getLastName());
-		currentUser.setPassword(user.getPassword());
+		currentUser.setPassword(encoder.encode(user.getPassword()));
 		currentUser.setPhone(user.getPhone());
 		userService.update(currentUser);
 		return new ResponseEntity<User>(currentUser, HttpStatus.OK);
