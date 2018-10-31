@@ -6907,4 +6907,40 @@
             <column name="street" value="63 E Aurora Dr sss"/>
         </insert>
     </changeSet>
+    
+    <changeSet id="1539581954677-38" author="keerthana">
+    	
+        <insert tableName="navigation">
+            <column name="id" valueNumeric="14"/>
+            <column name="icon_image" value="weixin"/>
+            <column name="name_token" value="chat"/>
+            <column name="screen_label" value="Chat"/>
+            <column name="screen_type" value="NODE"/>
+            <column name="sequence_no" valueNumeric="12"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="parent_id"/>
+        </insert>
+        <insert tableName="navigation">
+            <column name="id" valueNumeric="15"/>
+            <column name="icon_image" value="snapchat"/>
+            <column name="name_token" value="chatone"/>
+            <column name="screen_label" value="Chat One"/>
+            <column name="screen_type" value="LEAF"/>
+            <column name="sequence_no" valueNumeric="13"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="parent_id" valueNumeric="14"/>
+        </insert>
+        <insert tableName="role_navigation">
+            <column name="id" valueNumeric="31"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="navigation_id" valueNumeric="14"/>
+            <column name="role_id" valueNumeric="3"/>
+        </insert>
+        <insert tableName="role_navigation">
+            <column name="id" valueNumeric="32"/>
+            <column name="version" valueNumeric="0"/>
+            <column name="navigation_id" valueNumeric="15"/>
+            <column name="role_id" valueNumeric="3"/>
+        </insert>
+    </changeSet> 
 </databaseChangeLog>
