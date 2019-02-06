@@ -1,6 +1,11 @@
 package com.geo.controller;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.geo.entities.Address;
@@ -102,8 +108,9 @@ public class AddressRestController {
 
 	@RequestMapping(value = "/paged", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Page<Address>> listAllAddressPaged(@RequestParam("page") int page,@RequestParam("size") int size) {
-		Page<Address> address = addressService.findAllPaged(PageRequest.of(page,size));
+	public ResponseEntity<Page<Address>> listAllAddressPaged(@RequestParam("page") int page,
+			@RequestParam("size") int size) {
+		Page<Address> address = addressService.findAllPaged(PageRequest.of(page, size));
 		if (address.getSize() == 0) {
 			return new ResponseEntity<Page<Address>>(HttpStatus.NO_CONTENT);// You
 		}
@@ -112,12 +119,45 @@ public class AddressRestController {
 
 	@RequestMapping(value = "/slice", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,@RequestParam("size") int size) {
-		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page,size));
+	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,
+			@RequestParam("size") int size) {
+		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size));
 		if (slice.getSize() == 0) {
 			return new ResponseEntity<Slice<Address>>(HttpStatus.NO_CONTENT);// You
 		}
 		return new ResponseEntity<Slice<Address>>(slice, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/test/urlencodedparams", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<Void> postUrlEncodedParams(@RequestBody Address address) {
+
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
+
+	// technique for accessing url encodded form params
+	// http://localhost:8080/SpringGeolocation/address/test/urlencodedparams
+	// param is data
+
+	@RequestMapping(value = "/test/urlencodedparams", method = RequestMethod.POST, headers = {
+			"content-type=application/x-www-form-urlencoded" })
+	public ResponseEntity<Void> waboxapp(WebRequest request) {
+		// then use something like:
+		System.out.println("request payload: " + request.getParameter("data"));
+		System.out.println("request payload: " + request.getParameter("data2"));
+
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
+	}
+
+	@RequestMapping(value = "/test/urlencodedparams2", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+	public ResponseEntity<Void> createRole(HttpServletRequest request) {
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		System.out.println("parameterMap:"+parameterMap);
+		
+		for (Entry<String, String[]> entry : parameterMap.entrySet()) {
+			System.out.println(entry.getKey()+"     "+entry.getValue()[0]);
+		}
+		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}
 
 }

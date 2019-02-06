@@ -42,7 +42,7 @@ public class SpringGeolocationApplicationTests {
 		List<User> users = userService.findAll();
 		System.err.println(users);
 		assertNotNull(users);
-		assertTrue(users.size()==4);
+		assertTrue(users.size() == 4);
 	}
 
 }

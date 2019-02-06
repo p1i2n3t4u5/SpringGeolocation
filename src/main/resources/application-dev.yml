@@ -1,0 +1,48 @@
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+    root: info
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-methods: GET,POST,PUT,DELETE,HEAD
+        allowed-origins: http://localhost:8080
+      exposure:
+        include: '*'
+server:
+  port: 8080
+  servlet:
+    context-path: /SpringGeolocation
+spring:
+  aop:
+    proxy-target-class: false
+  datasource:
+    continue-on-error: true
+    data: classpath:data-mysql.sql
+    driver-class-name: com.mysql.jdbc.Driver
+    initialization-mode: 'always '
+    password: root
+    platform: mysql
+    type: org.apache.tomcat.jdbc.pool.DataSource
+    url: jdbc:mysql://localhost:3306/googlemapdev
+    username: root
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+welcome:
+  message: Hello World from dev
