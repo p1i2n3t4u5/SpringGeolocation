@@ -1,6 +1,5 @@
 package com.geo.controller;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -39,7 +37,7 @@ public class AddressRestController {
 	// Addresss--------------------------------------------------------
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<List<Address>> listAllAddress() {
 		List<Address> address = addressService.findAll();
 		if (address.isEmpty()) {
@@ -52,7 +50,7 @@ public class AddressRestController {
 	// Address--------------------------------------------------------
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
+	
 	public ResponseEntity<Address> getAddress(@PathVariable("id") long id) {
 		System.out.println("Fetching Address with id " + id);
 		Address address = addressService.findById(id);
@@ -67,7 +65,7 @@ public class AddressRestController {
 	// Address--------------------------------------------------------
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	@ResponseBody
+	
 	public ResponseEntity<Void> createAddress(@RequestBody Address address, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating Address " + address.toString());
 		addressService.save(address);
@@ -77,7 +75,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/findByCountry/{country}", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<List<Address>> listAllAddressByCountry(@PathVariable("country") String country) {
 		List<Address> address = addressService.findByCountry(country);
 		if (address.isEmpty()) {
@@ -87,7 +85,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/findByDistrict/{district}", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<List<Address>> listAllAddressByDistrict(@PathVariable("district") String district) {
 		List<Address> address = addressService.findByDistrict(district);
 		if (address.isEmpty()) {
@@ -97,7 +95,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/findByState/{state}", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<List<Address>> listAllAddressByState(@PathVariable("state") String state) {
 		List<Address> address = addressService.findByState(state);
 		if (address.isEmpty()) {
@@ -107,7 +105,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/paged", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<Page<Address>> listAllAddressPaged(@RequestParam("page") int page,
 			@RequestParam("size") int size) {
 		Page<Address> address = addressService.findAllPaged(PageRequest.of(page, size));
@@ -118,7 +116,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/slice", method = RequestMethod.GET)
-	@ResponseBody
+	
 	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,
 			@RequestParam("size") int size) {
 		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size));
@@ -129,7 +127,7 @@ public class AddressRestController {
 	}
 
 	@RequestMapping(value = "/test/urlencodedparams", method = RequestMethod.POST)
-	@ResponseBody
+	
 	public ResponseEntity<Void> postUrlEncodedParams(@RequestBody Address address) {
 
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
@@ -152,10 +150,10 @@ public class AddressRestController {
 	@RequestMapping(value = "/test/urlencodedparams2", method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 	public ResponseEntity<Void> createRole(HttpServletRequest request) {
 		Map<String, String[]> parameterMap = request.getParameterMap();
-		System.out.println("parameterMap:"+parameterMap);
-		
+		System.out.println("parameterMap:" + parameterMap);
+
 		for (Entry<String, String[]> entry : parameterMap.entrySet()) {
-			System.out.println(entry.getKey()+"     "+entry.getValue()[0]);
+			System.out.println(entry.getKey() + "     " + entry.getValue()[0]);
 		}
 		return new ResponseEntity<Void>(HttpStatus.ACCEPTED);
 	}

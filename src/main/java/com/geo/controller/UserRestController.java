@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -37,7 +36,6 @@ public class UserRestController {
 	// Users--------------------------------------------------------
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
-	@ResponseBody
 	public ResponseEntity<List<User>> listAllUsers() {
 		List<User> users = userService.findAll();
 		if (users.isEmpty()) {
@@ -50,7 +48,6 @@ public class UserRestController {
 	// User--------------------------------------------------------
 
 	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
 	public ResponseEntity<User> getUser(@PathVariable("id") long id) {
 		System.out.println("Fetching User with id " + id);
 		User user = userService.findById(id);
@@ -65,7 +62,6 @@ public class UserRestController {
 	// User--------------------------------------------------------
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	@ResponseBody
 	public ResponseEntity<Void> createUser(@RequestBody User user, UriComponentsBuilder ucBuilder) {
 		System.out.println("Creating User " + user.getLogin());
 
@@ -85,7 +81,6 @@ public class UserRestController {
 	// --------------------------------------------------------
 
 	@RequestMapping(value = "{id}", method = RequestMethod.PUT)
-	@ResponseBody
 	public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody User user) {
 		System.out.println("Updating User " + id);
 

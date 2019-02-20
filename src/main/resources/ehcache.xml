@@ -11,9 +11,17 @@
     <jsr107:defaults enable-management="false" enable-statistics="true"/>
   </service>
 
-  <cache alias="Address">
+ <!--  <cache alias="Address_2">
     <resources>
       <heap unit="entries">2000</heap>
     </resources>
-  </cache>
+  </cache> -->
+  <cache alias="Address">
+		<expiry>
+			<ttl unit="seconds">600</ttl>
+		</expiry>
+		<heap unit="entries">200</heap>
+		<jsr107:mbeans enable-statistics="true"/>
+	</cache>
 </config>
+

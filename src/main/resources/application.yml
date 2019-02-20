@@ -87,6 +87,9 @@ welcome:
   cache:
     jcache:
       config: classpath:ehcache.xml
-  cache-names: Address
+
+  
+  server:
+    log : debug 
 
 
