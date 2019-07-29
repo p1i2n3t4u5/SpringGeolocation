@@ -67,11 +67,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/user/**").hasAnyAuthority("admin", "user")
-				.anyRequest().authenticated().antMatchers("/role/**").hasAnyAuthority("admin").and().authorizeRequests()
-				.requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll().antMatchers("/**").authenticated()
-				.antMatchers("/h2-console/**").permitAll()
-
+		http.cors().and().csrf().disable().authorizeRequests()
+		        .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+		        .antMatchers("/user/**").hasAnyAuthority("admin", "user")
+		        .antMatchers("/role/**").hasAnyAuthority("admin").anyRequest().authenticated()
+		        .antMatchers("/**").authenticated()
 				.and().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
 				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
 																									// or by applying

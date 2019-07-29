@@ -6,12 +6,45 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * The persistent class for the actionpicture database table.
- * 
- */
+ * https://www.baeldung.com/javax-validation
+ * All of the annotations used in the example are standard JSR annotations:
 
+@NotNull – validates that the annotated property value is not null
+@AssertTrue – validates that the annotated property value is true
+@Size – validates that the annotated property value has a size between the attributes min and max; can be applied to String, Collection, Map, and array properties
+@Min – vValidates that the annotated property has a value no smaller than the value attribute
+@Max – validates that the annotated property has a value no larger than the value attribute
+@Email – validates that the annotated property is a valid email address
+Some annotations accept additional attributes, but the message attribute is common to all of them. This is the message that will usually be rendered when the value of the respective property fails validation.
+
+Some additional annotations that can be found in the JSR are:
+
+@NotEmpty – validates that the property is not null or empty; can be applied to String, Collection, Map or Array values
+@NotBlank – can be applied only to text values and validated that the property is not null or whitespace
+@Positive and @PositiveOrZero – apply to numeric values and validate that they are strictly positive, or positive including 0
+@Negative and @NegativeOrZero – apply to numeric values and validate that they are strictly negative, or negative including 0
+@Past and @PastOrPresent – validate that a date value is in the past or the past including the present; can be applied to date types including those added in Java 8
+@Future and @FutureOrPresent – validates that a date value is in the future, or in the future including the present
+ */
+/*
+ * @ApiModel
+ * @ApiModelProperty
+ * 
+ * swagger annotation for api description
+ * 
+ * 
+*/
+
+
+@ApiModel("This entity contains all address information ")
 @Entity(name = "Address")
 @Table(name = "address")
 public class Address {
@@ -21,18 +54,25 @@ public class Address {
 	@Column(name = "id")
 	private long id;
 
+	@ApiModelProperty("This property contains the address line one")
+	@Size(min=10,max=100)
 	@Column(name = "address_line_one")
 	private String addressLineOne;
 
+	@ApiModelProperty("This property contains the address line two")
 	@Column(name = "address_line_two")
 	private String addressLineTwo;
 
+	@ApiModelProperty("Enter valid street in this field")
+	@NotBlank(message="street can not be blank")
 	@Column(name = "street")
 	private String street;
 
+	@NotBlank 
 	@Column(name = "district")
 	private String district;
 
+	@NotBlank 
 	@Column(name = "state")
 	private String state;
 

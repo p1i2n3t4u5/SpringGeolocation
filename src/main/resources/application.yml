@@ -17,6 +17,11 @@ management:
     web:
       exposure:
         include: '*'
+      base-path: /actuator   
+#  server:
+#     port: 8090
+      
+           
 server:
   port: 8080
   servlet:
@@ -57,7 +62,7 @@ spring:
     change-log: classpath:/db/changelog/db.changelog-master.xml
   mail:
     host: smtp.gmail.com
-    password: pintu@12345
+    password: Supriya@12345
     port: 587
     properties:
       mail:
@@ -70,13 +75,15 @@ spring:
           timeout: 30000
           writetimeout: 5000
     protocol: smtp
-    test-connection: false
+    test-connection: true
     username: niranjanpanigrahi20099@gmail.com
   quartz:
     jdbc:
       comment-prefix: '--******** '
       initialize-schema: always
     job-store-type: 'jdbc'
+  messages:
+    basename: messages
 welcome:
   message: Hello World
   
@@ -91,5 +98,10 @@ welcome:
   
   server:
     log : debug 
+    
+
+   
+   
+    
 
 

@@ -32,7 +32,7 @@ public class AddressServiceImpl implements AddressService {
 		return addressRepository.findAll();
 	}
 
-	@Cacheable(value="Address",key="#id")
+	//@Cacheable(value="Address",key="#id")
 	public Address findById(long id) {
 		Optional<Address> address = addressRepository.findById(id);
 		if (address.isPresent()) {

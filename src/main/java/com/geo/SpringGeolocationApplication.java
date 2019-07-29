@@ -1,5 +1,7 @@
 package com.geo;
 
+import java.util.Locale;
+
 import javax.sql.DataSource;
 
 //import org.apache.commons.io.IOUtils;
@@ -11,11 +13,15 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.geo.config.profile.EnvBasedConfig;
 import com.geo.service.AddressService;
@@ -53,7 +59,7 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 
 	@Autowired
 	EnvBasedConfig envBasedConfig;
-	
+
 	@Autowired
 	CacheManager cacheManager;
 
@@ -63,7 +69,6 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		SpringApplication.run(SpringGeolocationApplication.class, args);
 
 	}
-	
 
 	@Override
 	public void run(String... arg0) throws Exception {
@@ -71,10 +76,10 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 		System.err.println("run() started");
 		System.err.println("Datasource:" + dataSource);
 		envBasedConfig.setUp();
-		
-		System.out.println("cacheManager name"+cacheManager.toString());
-		
-		System.out.println("cacheManager:"+cacheManager.getCacheNames());
+
+		System.out.println("cacheManager name" + cacheManager.toString());
+
+		System.out.println("cacheManager:" + cacheManager.getCacheNames());
 
 		// BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		//
@@ -694,5 +699,24 @@ public class SpringGeolocationApplication implements CommandLineRunner {
 	// // roleNavigationService.save(roleNavigation13);
 	//
 	// }
+
+	// for internationalization
+
+	@Bean
+	public LocaleResolver localeResolver() {
+		//SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+		AcceptHeaderLocaleResolver localeResolver=new AcceptHeaderLocaleResolver();
+		localeResolver.setDefaultLocale(Locale.US);
+		return localeResolver;
+	}
+	
+	
+//no need add this bean this is configured from properties file	
+//	@Bean
+//	public ResourceBundleMessageSource messageSource() {
+//		ResourceBundleMessageSource resourceBundleMessageSource=new ResourceBundleMessageSource(); 
+//		resourceBundleMessageSource.setBasename("messages");
+//		return resourceBundleMessageSource;
+//	}
 
 }

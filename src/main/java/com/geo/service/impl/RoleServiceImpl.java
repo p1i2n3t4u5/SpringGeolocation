@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.geo.entities.Role;
+import com.geo.exception.DuplicateEntryException;
 import com.geo.repository.RoleRepository;
 import com.geo.service.RoleService;
-
-import exception.DuplicateEntryException;
 
 @Service("roleService")
 public class RoleServiceImpl implements RoleService {

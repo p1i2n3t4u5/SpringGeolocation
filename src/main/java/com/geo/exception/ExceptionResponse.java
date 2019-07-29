@@ -1,4 +1,4 @@
-package exception;
+package com.geo.exception;
 
 import java.util.Date;
 
