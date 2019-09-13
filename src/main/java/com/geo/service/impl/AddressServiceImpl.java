@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -32,7 +31,7 @@ public class AddressServiceImpl implements AddressService {
 		return addressRepository.findAll();
 	}
 
-	//@Cacheable(value="Address",key="#id")
+	// @Cacheable(value="Address",key="#id")
 	public Address findById(long id) {
 		Optional<Address> address = addressRepository.findById(id);
 		if (address.isPresent()) {
@@ -41,18 +40,16 @@ public class AddressServiceImpl implements AddressService {
 		return null;
 	}
 
-	
-	
 	public Address save(Address address) {
 		return addressRepository.save(address);
 	}
 
-	@CachePut(value="Address",key = "#address.id" , unless="#result==null")
+	@CachePut(value = "Address", key = "#address.id", unless = "#result==null")
 	public Address update(Address address) {
 		return addressRepository.save(address);
 	}
 
-	@CacheEvict(value="Address",key="#id")
+	@CacheEvict(value = "Address", key = "#id")
 	public void deleteById(long id) {
 		addressRepository.deleteById(id);
 	}

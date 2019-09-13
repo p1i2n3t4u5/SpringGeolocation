@@ -17,6 +17,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(value= {"password"})  //static filtering 
 @Entity
 @Table(name = "user")
 public class User implements Serializable{
@@ -45,6 +48,7 @@ public class User implements Serializable{
 	@Column(name = "login", unique = true,nullable=false)
 	private String login;
 
+	//@JsonIgnore  to ignore this field while serializing //static filtering 
 	@Column(name = "password")
 	private String password;
 

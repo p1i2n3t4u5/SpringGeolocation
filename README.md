@@ -57,6 +57,24 @@ to enable gmail smtp access enable from below link
 
 https://myaccount.google.com/u/1/lesssecureapps?pageId=none
 
+to access swagger documentation
+--------------------------------
+http://localhost:8080/SpringGeolocation/v2/api-docs
+http://localhost:8080/SpringGeolocation/swagger-ui.html
+
+actuator end points with hal browser
+--------------------------------------
+http://localhost:8080/SpringGeolocation/actuator
+
+http://localhost:8080/SpringGeolocation/browser/index.html#/SpringGeolocation  --> hal browser opens
+
+http://localhost:8080/SpringGeolocation/browser/index.html#/SpringGeolocation/actuator  
+
+
+
+
+
+
 
 
 

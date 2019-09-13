@@ -75,7 +75,7 @@ spring:
           timeout: 30000
           writetimeout: 5000
     protocol: smtp
-    test-connection: true
+    test-connection: false
     username: niranjanpanigrahi20099@gmail.com
   quartz:
     jdbc:
