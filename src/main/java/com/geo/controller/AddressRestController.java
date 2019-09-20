@@ -18,6 +18,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpStatus;
@@ -164,7 +166,7 @@ public class AddressRestController {
 
 	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,
 			@RequestParam("size") int size) {
-		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size));
+		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size),Sort.by(Direction.ASC,"id"));
 		if (slice.getSize() == 0) {
 			return new ResponseEntity<Slice<Address>>(HttpStatus.NO_CONTENT);// You
 		}

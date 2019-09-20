@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.geo.entities.Navigation;
@@ -49,6 +51,7 @@ public class NavigationServiceImpl implements NavigationService {
 		return navigationRepository.save(navigation);
 	}
 
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW)
 	public Navigation update(Navigation navigation) {
 		return navigationRepository.save(navigation);
 	}
