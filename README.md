@@ -52,6 +52,8 @@ request mail format
 
 
 
+https://dzone.com/articles/add-login-to-your-spring-boot-app-in-10-mins
+
 to enable gmail smtp access enable from below link
 ---------------------------------------------------
 
