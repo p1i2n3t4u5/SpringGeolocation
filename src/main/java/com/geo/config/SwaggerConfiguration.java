@@ -35,8 +35,11 @@ public class SwaggerConfiguration {
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).apiInfo(DEFAULT_API_INFO).produces(DEFAULT_PRODUCES_AND_CONSUMES)
-				.consumes(DEFAULT_PRODUCES_AND_CONSUMES).select().apis(RequestHandlerSelectors.any())
+		return new Docket(DocumentationType.SWAGGER_2)
+				.apiInfo(DEFAULT_API_INFO)
+				.produces(DEFAULT_PRODUCES_AND_CONSUMES)
+				.consumes(DEFAULT_PRODUCES_AND_CONSUMES)
+				.select().apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any()).build();
 	}
 }

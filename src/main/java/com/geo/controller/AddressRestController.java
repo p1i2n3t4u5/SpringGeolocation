@@ -166,7 +166,7 @@ public class AddressRestController {
 
 	public ResponseEntity<Slice<Address>> listAllAddressSliced(@RequestParam("page") int page,
 			@RequestParam("size") int size) {
-		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size),Sort.by(Direction.ASC,"id"));
+		Slice<Address> slice = addressService.findAllSliced(PageRequest.of(page, size,Sort.by(Direction.ASC,"id")));
 		if (slice.getSize() == 0) {
 			return new ResponseEntity<Slice<Address>>(HttpStatus.NO_CONTENT);// You
 		}

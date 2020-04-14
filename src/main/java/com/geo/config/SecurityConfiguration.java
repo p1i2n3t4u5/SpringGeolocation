@@ -69,15 +69,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
 		        .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+		        .antMatchers( "/public/**").permitAll()  
 		        .antMatchers("/user/**").hasAnyAuthority("admin", "user")
 		        .antMatchers("/role/**").hasAnyAuthority("admin").anyRequest().authenticated()
 		        .antMatchers("/**").authenticated()
 				.and().exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint)
-				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin().loginPage("/login") // by putting this
-																									// or by applying
-																									// authentication
-				// entrypoint default login page would not appear
-				// .loginProcessingUrl("/authenticate")
+				.accessDeniedHandler(restAccessDeniedHandler).and().formLogin()
+				.loginPage("/login.html") 
+				.failureUrl("/login-error.html")
+				.loginProcessingUrl("/login")
 				.successHandler(restAuthenticationSuccessHandler).failureHandler(restAuthenticationFailureHandler)
 				.usernameParameter("username").passwordParameter("password").permitAll().and().logout()
 				.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler).deleteCookies("JSESSIONID").permitAll()
@@ -95,7 +95,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 //		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
 		web.ignoring().antMatchers("/resources/**", "/index.html", "/login.html", "/partials/**", "/template/**", "/",
-				"/error/**", "/h2-console", "*/h2-console/*");
+				"/error/**", "/h2-console", "*/h2-console/*","/swagger-ui.html/*","/public/style.css");
 	}
 
 	@Bean
